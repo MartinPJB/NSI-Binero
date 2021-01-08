@@ -30,6 +30,35 @@ assert transpose([["1", "2", "3", "4"], ["5", "6", "7", "8"], ["9", "10", "11", 
 assert transpose([[34, True], [[False, "25"], 0]]) == [[34, [False, '25']], [True, 0]]
 
 
+def verifie_consecutif(liste):
+    """Fonction qui, à l'aide d'une liste, retourne un boolean variant selon si trois éléments consécutifs se situe
+    dans cette liste.
+    Paramètre(s):
+        - liste list: Liste à vérifier, peut comprendre un nombre indéfini d'élément de tout types (sauf None) pouvant
+            différer les uns des autres.
+    Retourne:
+        - bool: False si trois caractères identiques se suivent, sinon True.
+    Exemples:
+        >>> verifie_consecutif([6, 2, 1, 1, 1, 2])
+        False
+        >>> verifie_consecutif([[12, 12, 12], [14, 14, 14], False])
+        True
+    """
+    precedents = [None] * 2   # Création d'un tableau vide stockant les valeurs à vérifier
+
+    # Itération de chacun des éléments de la liste, si l'un d'eux est identique avec les deux éléments précédents,
+    # retourne False, sinon, on continue en assignant le premier élément de precedents à son second indice et l'élément
+    # itéré au premier indice de precedents
+
+    for element in liste:
+        if element == precedents[0] and element == precedents[1]:
+            return False
+        else:
+            precedents[1] = precedents[0]
+            precedents[0] = element
+    return True
+
+
 def verifie_parite(liste):
     """Fonction qui, à l'aide d'une grille sous forme de liste, retourne True si celle-ci contient autant de 0 que de 1,
     Sinon retourne False.
@@ -47,14 +76,14 @@ def verifie_parite(liste):
         >>> verifie_parite(["1","1","1","0"])
         False
     """
-    zero, un = 0, 0
+    zero, un = 0, 0   #Variables qui nous permettrons de compter le nombre de 0 et de 1
     for i in liste:
         if i == "1":
-            un += 1
+            un += 1   #Ajoute 1 à la variable "un" à la rencontre d'un "1"
         else:
-            zero += 1
+            zero += 1 #Ajoute 0 si i n'est pas égal à "1"
     if zero == un:
-        return True
+        return True   #Retourne True si le nombre de 0 et de 1 est égal
     return False
 
 print(verifie_parite(["1","1","1","0"]))
