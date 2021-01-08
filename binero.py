@@ -23,11 +23,14 @@ def transpose(g):
         for j in range(len(g)):             # Parcours des éléments de la liste g[i] (rappel: ici, len(g) == len(g[i]))
             resultat[j][i] = g[i][j]        # Remplace les valeurs vides du tableau de resultat en inversant les
                                             # positions afin d'inverser les colonnes et les lignes de la grille
+
     return resultat
+
 
 assert transpose([["1", "2", "3", "4"], ["5", "6", "7", "8"], ["9", "10", "11", "12"], ["13", "14", "15", "16"]]) == \
                  [["1", "5", "9", "13"], ["2", "6", "10", "14"], ["3", "7", "11", "15"], ["4", "8", "12", "16"]]
 assert transpose([[34, True], [[False, "25"], 0]]) == [[34, [False, '25']], [True, 0]]
+
 
 def verifie_parite(liste):
     """Fonction qui, à l'aide d'une grille sous forme de liste, retourne True si celle-ci contient autant de 0 que de 1,
