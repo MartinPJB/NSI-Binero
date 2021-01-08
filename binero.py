@@ -5,7 +5,7 @@ def transpose(g):
     Paramètre(s):
         - g list: Grille à transposer sous la forme de liste de liste. La liste parente peut être composé d'un nombre de
             listes indéfinie mais doit être identique au nombre d'éléments des listes enfants. Les éléments de la liste
-            enfante peuvent être de tout type et différents les uns des autres.
+            enfant peuvent être de tout type et différents les uns des autres.
 
     Retourne:
         - list: Résultat de la fonction pour lequel on a inversé les colonnes et les lignes du paramètre g.
