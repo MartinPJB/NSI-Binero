@@ -66,6 +66,10 @@ def verifie_consecutif(liste):
     return True
 
 
+assert not verifie_consecutif([6, 2, 1, 1, 1, 2])
+assert verifie_consecutif([[12, 12, 12], [14, 14, 14], False])
+
+
 def verifie_parite(liste):
     """Fonction qui, à l'aide d'une grille sous forme de liste, retourne True si celle-ci contient autant de 0 que de 1,
     Sinon retourne False.
