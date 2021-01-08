@@ -56,4 +56,5 @@ def verifie_parite(liste):
         return True   #Retourne True si le nombre de 0 et de 1 est égal
     return False
 
-print(verifie_parite(["1","1","1","0"]))
+assert verifie_parite(["1","1","1","0"]) == False
+assert verifie_parite(["1","1","0","0"]) == True
