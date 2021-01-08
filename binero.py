@@ -64,3 +64,34 @@ def verifie_consecutif(liste):
             precedents[0] = element
 
     return True
+
+
+def verifie_parite(liste):
+    """Fonction qui, à l'aide d'une grille sous forme de liste, retourne True si celle-ci contient autant de 0 que de 1,
+    Sinon retourne False.
+
+    Paramètre(s):
+        - liste list: Grille à vérifier
+
+    Retourne:
+        - boolean: Résultat de la vérification de parité.
+
+    Exemples:
+        >>> verifie_parite(["1","0","1","0"])
+        True
+
+        >>> verifie_parite(["1","1","1","0"])
+        False
+    """
+    zero, un = 0, 0   #Variables qui nous permettrons de compter le nombre de 0 et de 1
+    for i in liste:
+        if i == "1":
+            un += 1   #Ajoute 1 à la variable "un" à la rencontre d'un "1"
+        else:
+            zero += 1 #Ajoute 0 si i n'est pas égal à "1"
+    if zero == un:
+        return True   #Retourne True si le nombre de 0 et de 1 est égal
+    return False
+
+assert verifie_parite(["1","1","1","0"]) == False
+assert verifie_parite(["1","1","0","0"]) == True
