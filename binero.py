@@ -17,12 +17,12 @@ def transpose(g):
         >>> transpose([[34, True], [[False, "25"], 0]])
         [[34, [False, '25']], [True, 0]]
     """
-    resultat = [[""] * len(i) for i in g]   # Création un tableau vide contenant le même nombre d'éléments que g
+    resultat = [[None] * len(i) for i in g]  # Création un tableau vide contenant le même nombre d'éléments que g
 
-    for i in range(len(g)):                 # Parcours des listes parentes de g
-        for j in range(len(g)):             # Parcours des éléments de la liste g[i] (rappel: ici, len(g) == len(g[i]))
-            resultat[j][i] = g[i][j]        # Remplace les valeurs vides du tableau de resultat en inversant les
-                                            # positions afin d'inverser les colonnes et les lignes de la grille
+    for i in range(len(g)):             # Parcours des listes parentes de g
+        for j in range(len(g)):         # Parcours des éléments de la liste g[i] (rappel: ici, len(g) == len(g[i]))
+            resultat[j][i] = g[i][j]    # Remplace les valeurs vides du tableau de resultat en inversant les
+                                        # positions afin d'inverser les colonnes et les lignes de la grille
 
     return resultat
 
