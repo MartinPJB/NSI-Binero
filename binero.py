@@ -121,11 +121,12 @@ def verifie_identique(liste):
         >>> verifie_identique(["1", "1", "0"])
         False
     """
-    valeurs = []
-    for element in liste:
-        if element in valeurs:
-            return False
-        valeurs.append(element)
+    valeurs = []                # Variable nous permettant de stocker les valeurs de la liste "liste"
+
+    for element in liste:       # Itération de chacun des éléments de la liste et vérification de la
+        if element in valeurs:  # présence de l'élément dans la liste "valeurs". Si celle-ci y est
+            return False        # présente, la fonction retournera False, sinon il l'ajoutera dans
+        valeurs.append(element) # celle-ci. Si aucune valeur n'est identique, la fonction retournera True.
     return True
 
 
