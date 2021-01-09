@@ -44,11 +44,11 @@ def verifie_consecutif(liste):
         - bool: False si trois caractères identiques se suivent, sinon True.
 
     Exemples:
-        >>> verifie_consecutif([6, 2, 1, 1, 1, 2])
-        False
-
         >>> verifie_consecutif([[12, 12, 12], [14, 14, 14], False])
         True
+
+        >>> verifie_consecutif([6, 2, 1, 1, 1, 2])
+        False
     """
     precedents = [None] * 2  # Création d'un tableau vide stockant les valeurs à vérifier
 
@@ -66,8 +66,8 @@ def verifie_consecutif(liste):
     return True
 
 
-assert not verifie_consecutif([6, 2, 1, 1, 1, 2])
 assert verifie_consecutif([[12, 12, 12], [14, 14, 14], False])
+assert not verifie_consecutif([6, 2, 1, 1, 1, 2])
 
 
 def verifie_parite(liste):
@@ -100,8 +100,8 @@ def verifie_parite(liste):
     return False
 
 
-assert not verifie_parite(["1", "1", "1", "0"])
-assert verifie_parite(["0", "1", "1", "0", "1"])
+assert verifie_parite(["1", "0", "1", "0"])
+assert not verifie_parite(["0", "1", "1", "0", "1"])
 
 
 def verifie_identique(liste):
@@ -132,5 +132,5 @@ def verifie_identique(liste):
     return True
 
 
-assert not verifie_identique(["1", "1", "0"])
 assert verifie_identique(["1", "0"])
+assert not verifie_identique(["1", "1", "0"])
