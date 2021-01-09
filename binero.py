@@ -134,3 +134,33 @@ def verifie_identique(liste):
 
 assert verifie_identique(["1", "0"])
 assert not verifie_identique(["1", "1", "0"])
+
+
+def grille_complete(g):
+    """Fonction qui, à l'aide d'une grille sous forme de liste contenant des listes, retourne un booléen variant selon
+    si toutes les listes enfant sont remplies des chaînes de caractères "0" ou "1".
+
+    Paramètre(s):
+        - g list: Grille à vérifier sous la forme de liste de liste. La liste parente et les listes enfant peuvent être
+        composées d'un nombre de listes/éléments indéfini et les éléments des listes enfant peuvent être de tout type.
+
+    Retourne:
+        - bool: True si tous les éléments de la grille (listes enfant) font partie des chaînes de caractères "0" ou "1".
+
+    Exemple:
+        >>> grille_complete([["1", "0", "1", "1"], ["1", "0", "0"], ["1"], ["0", "0"]])
+        True
+
+        >>> grille_complete([["0", 1, "1"], ["0", "1", "1"], ["0", "1"]])
+        False
+    """
+    for liste in g:                                     # Itération simple de tous les éléments de chacune des listes
+        for element in liste:                           # en vérifiant que ceux-ci sont soit "0", soit "1". S'ils le
+            if element != "0" and element != "1":       # sont, retourne True, sinon retourne False.
+                return False
+
+    return True
+
+
+assert grille_complete([["1", "0", "1", "1"], ["1", "0", "0"], ["1"], ["0", "0"]])
+assert not grille_complete([["0", 1, "1"], ["0", "1", "1"], ["0", "1"]])
