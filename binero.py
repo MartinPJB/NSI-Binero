@@ -102,3 +102,33 @@ def verifie_parite(liste):
 
 assert not verifie_parite(["1", "1", "1", "0"])
 assert verifie_parite(["0", "1", "1", "0", "1"])
+
+
+def verifie_identique(liste):
+    """Fonction qui, à l'aide d'une liste, retourne un booléen variant selon si la liste contient au moins deux éléments identiques.
+
+    Paramètre(s):
+        - liste list: Liste à vérifier, peut posséder un nombre d'élément indéfini mais doit être pair (sinon le
+        résultat sera forcément False) sachant que ceux-ci doivent être les chaînes de caractères "0" ou "1".
+
+    Retourne:
+        - boolean: False si la liste contient au moins deux éléments identiques, sinon True.
+
+    Exemples:
+        >>> verifie_identique(["1", "0"])
+        True
+
+        >>> verifie_identique(["1", "1", "0"])
+        False
+    """
+    valeurs = []                # Variable nous permettant de stocker les valeurs de la liste "liste"
+
+    for element in liste:       # Itération de chacun des éléments de la liste et vérification de la
+        if element in valeurs:  # présence de l'élément dans la liste "valeurs". Si celle-ci y est
+            return False        # présente, la fonction retournera False, sinon il l'ajoutera dans
+        valeurs.append(element) # celle-ci. Si aucune valeur n'est identique, la fonction retournera True.
+    return True
+
+
+assert not verifie_identique(["1", "1", "0"])
+assert verifie_identique(["1", "0"])
