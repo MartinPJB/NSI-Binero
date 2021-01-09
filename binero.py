@@ -4,8 +4,8 @@ def transpose(g):
 
     Paramètre(s):
         - g list: Grille à transposer sous la forme de liste de liste. La liste parente peut être composée d'un nombre
-            de listes indéfinie mais doit être identique au nombre d'éléments des listes enfants. Les éléments de la
-            liste enfant peuvent être de tout type et différents les uns des autres.
+        de listes indéfini mais doit être identique au nombre d'éléments des listes enfant. Les éléments de la liste
+        enfant peuvent être de tout type et différents les uns des autres.
 
     Retourne:
         - list: Résultat de la fonction pour lequel on a inversé les colonnes et les lignes du paramètre g.
@@ -38,7 +38,7 @@ def verifie_consecutif(liste):
 
     Paramètre(s):
         - liste list: Liste à vérifier, peut comprendre un nombre indéfini d'élément de tout type (sauf None) pouvant
-            différer les uns des autres.
+        différer les uns des autres.
 
     Retourne:
         - bool: False si trois caractères identiques se suivent, sinon True.
