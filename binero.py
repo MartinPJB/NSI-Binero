@@ -3,7 +3,7 @@ def transpose(g):
     pour laquelle on a inversé les colonnes et les lignes de la grille d'origine.
 
     Paramètre(s):
-        - g list: Grille à transposer sous la forme de liste de liste. La liste parente peut être composé d'un nombre de
+        - g list: Grille à transposer sous la forme de liste de liste. La liste parente peut être composée d'un nombre de
             listes indéfinie mais doit être identique au nombre d'éléments des listes enfants. Les éléments de la liste
             enfant peuvent être de tout type et différents les uns des autres.
 
@@ -37,7 +37,7 @@ def verifie_consecutif(liste):
     dans cette liste.
 
     Paramètre(s):
-        - liste list: Liste à vérifier, peut comprendre un nombre indéfini d'élément de tout types (sauf None) pouvant
+        - liste list: Liste à vérifier, peut comprendre un nombre indéfini d'élément de tous types (sauf None) pouvant
             différer les uns des autres.
 
     Retourne:
@@ -92,7 +92,7 @@ def verifie_parite(liste):
 
     for element in liste:           # Itération de chacun des éléments de la liste où l'on compte le nombre de "0"
         if element == "0":          # (chaîne de caractère), si celui-ci correspond à la moitié du nombre d'élément de
-            zeros += 1              # la liste (puisque nous savons que ces éléments sont soit "0" ou "1" et que leur
+            zeros += 1              # la liste (puisque nous savons que ses éléments sont soit "0" ou "1" et que leur
                                     # nombre est pair), retourne True, sinon False.
     if zeros == len(liste) // 2:
         return True
@@ -108,8 +108,8 @@ def verifie_identique(liste):
     """Fonction qui, à l'aide d'une liste, retourne un booléen variant selon si la liste contient au moins deux éléments identiques.
 
     Paramètre(s):
-        - liste list: Liste à vérifier, peut posséder un nombre d'élément indéfini mais doit être pair (sinon le
-        résultat sera forcément False) sachant que ceux-ci doivent être les chaînes de caractères "0" ou "1".
+        - liste list: Liste à vérifier, peut posséder un nombre d'élément indéfini
+        sachant que ceux-ci doivent être les chaînes de caractères "0" ou "1".
 
     Retourne:
         - boolean: False si la liste contient au moins deux éléments identiques, sinon True.
