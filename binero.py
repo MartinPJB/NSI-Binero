@@ -71,7 +71,7 @@ assert verifie_consecutif([[12, 12, 12], [14, 14, 14], False])
 
 
 def verifie_parite(liste):
-    """Fonction qui, à l'aide d'une liste, retourne un booléen variant selon si autant de "0" et de "1" se situe dans
+    """Fonction qui, à l'aide d'une liste, retourne un booléen variant selon si autant de "0" et de "1" se situent dans
     cette liste.
 
     Paramètre(s):
