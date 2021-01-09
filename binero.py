@@ -3,9 +3,9 @@ def transpose(g):
     pour laquelle on a inversé les colonnes et les lignes de la grille d'origine.
 
     Paramètre(s):
-        - g list: Grille à transposer sous la forme de liste de liste. La liste parente peut être composée d'un nombre de
-            listes indéfinie mais doit être identique au nombre d'éléments des listes enfants. Les éléments de la liste
-            enfant peuvent être de tout type et différents les uns des autres.
+        - g list: Grille à transposer sous la forme de liste de liste. La liste parente peut être composée d'un nombre
+            de listes indéfinie mais doit être identique au nombre d'éléments des listes enfants. Les éléments de la
+            liste enfant peuvent être de tout type et différents les uns des autres.
 
     Retourne:
         - list: Résultat de la fonction pour lequel on a inversé les colonnes et les lignes du paramètre g.
@@ -37,7 +37,7 @@ def verifie_consecutif(liste):
     dans cette liste.
 
     Paramètre(s):
-        - liste list: Liste à vérifier, peut comprendre un nombre indéfini d'élément de tous types (sauf None) pouvant
+        - liste list: Liste à vérifier, peut comprendre un nombre indéfini d'élément de tout type (sauf None) pouvant
             différer les uns des autres.
 
     Retourne:
@@ -105,11 +105,12 @@ assert verifie_parite(["0", "1", "1", "0", "1"])
 
 
 def verifie_identique(liste):
-    """Fonction qui, à l'aide d'une liste, retourne un booléen variant selon si la liste contient au moins deux éléments identiques.
+    """Fonction qui, à l'aide d'une liste, retourne un booléen variant selon si la liste contient au moins deux éléments
+    identiques.
 
     Paramètre(s):
-        - liste list: Liste à vérifier, peut posséder un nombre d'élément indéfini
-        sachant que ceux-ci doivent être les chaînes de caractères "0" ou "1".
+        - liste list: Liste à vérifier, peut posséder un nombre d'élément indéfini sachant que ceux-ci doivent être les
+        chaînes de caractères "0" ou "1".
 
     Retourne:
         - boolean: False si la liste contient au moins deux éléments identiques, sinon True.
@@ -121,12 +122,13 @@ def verifie_identique(liste):
         >>> verifie_identique(["1", "1", "0"])
         False
     """
-    valeurs = []                # Variable nous permettant de stocker les valeurs de la liste "liste"
+    valeurs = []  # Variable nous permettant de stocker les valeurs de la liste "liste"
 
-    for element in liste:       # Itération de chacun des éléments de la liste et vérification de la
-        if element in valeurs:  # présence de l'élément dans la liste "valeurs". Si celle-ci y est
-            return False        # présente, la fonction retournera False, sinon il l'ajoutera dans
-        valeurs.append(element) # celle-ci. Si aucune valeur n'est identique, la fonction retournera True.
+    for element in liste:          # Itération de chacun des éléments de la liste et vérification de la
+        if element in valeurs:     # présence de l'élément dans la liste "valeurs". Si celle-ci y est
+            return False           # présente, la fonction retournera False, sinon il l'ajoutera dans
+        valeurs.append(element)    # celle-ci. Si aucune valeur n'est identique, la fonction retournera True.
+
     return True
 
 
