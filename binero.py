@@ -85,7 +85,7 @@ def verifie_parite(liste):
         >>> verifie_parite(["1", "0", "1", "0"])
         True
 
-        >>> verifie_parite(["0", "1", "1", "0", "1"])
+        >>> verifie_parite(["0", "1", "1", "0", "1", "1"])
         False
     """
     zeros = 0  # Variable nous permettant de compter le nombre de "0"
@@ -101,7 +101,7 @@ def verifie_parite(liste):
 
 
 assert verifie_parite(["1", "0", "1", "0"])
-assert not verifie_parite(["0", "1", "1", "0", "1"])
+assert not verifie_parite(["0", "1", "1", "0", "1", "1"])
 
 
 def verifie_identique(liste):
