@@ -71,14 +71,21 @@ assert verifie_consecutif([[12, 12, 12], [14, 14, 14], False])
 
 
 def verifie_parite(liste):
+    """Fonction qui, à l'aide d'une liste, retourne un booléen variant selon si autant de "0" et de "1" se situe dans
+    cette liste.
 
     Paramètre(s):
+        - liste list: Liste à vérifier, peut posséder un nombre d'élément indéfini mais doit être pair (sinon le
+        résultat sera forcément False) sachant que ceux-ci doivent être les chaînes de caractères "0" ou "1".
 
     Retourne:
+        - boolean: True si la liste contient autant de "0" que de "1", sinon False.
 
     Exemples:
+        >>> verifie_parite(["1", "0", "1", "0"])
         True
 
+        >>> verifie_parite(["0", "1", "1", "0", "1"])
         False
     """
     zero, un = 0, 0   #Variables qui nous permettrons de compter le nombre de 0 et de 1
@@ -91,3 +98,6 @@ def verifie_parite(liste):
         return True   #Retourne True si le nombre de 0 et de 1 est égal
     return False
 
+
+assert not verifie_parite(["1", "1", "1", "0"])
+assert verifie_parite(["0", "1", "1", "0", "1"])
