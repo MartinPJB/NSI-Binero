@@ -4,8 +4,8 @@ def transpose(g):
 
     Paramètre(s):
         - g list: Grille à transposer sous la forme de liste de liste. La liste parente peut être composée d'un nombre
-            de listes indéfinie mais doit être identique au nombre d'éléments des listes enfants. Les éléments de la
-            liste enfant peuvent être de tout type et différents les uns des autres.
+        de listes indéfini mais doit être identique au nombre d'éléments des listes enfant. Les éléments de la liste
+        enfant peuvent être de tout type et différents les uns des autres.
 
     Retourne:
         - list: Résultat de la fonction pour lequel on a inversé les colonnes et les lignes du paramètre g.
@@ -38,17 +38,17 @@ def verifie_consecutif(liste):
 
     Paramètre(s):
         - liste list: Liste à vérifier, peut comprendre un nombre indéfini d'élément de tout type (sauf None) pouvant
-            différer les uns des autres.
+        différer les uns des autres.
 
     Retourne:
         - bool: False si trois caractères identiques se suivent, sinon True.
 
     Exemples:
-        >>> verifie_consecutif([6, 2, 1, 1, 1, 2])
-        False
-
         >>> verifie_consecutif([[12, 12, 12], [14, 14, 14], False])
         True
+
+        >>> verifie_consecutif([6, 2, 1, 1, 1, 2])
+        False
     """
     precedents = [None] * 2  # Création d'un tableau vide stockant les valeurs à vérifier
 
@@ -66,8 +66,8 @@ def verifie_consecutif(liste):
     return True
 
 
-assert not verifie_consecutif([6, 2, 1, 1, 1, 2])
 assert verifie_consecutif([[12, 12, 12], [14, 14, 14], False])
+assert not verifie_consecutif([6, 2, 1, 1, 1, 2])
 
 
 def verifie_parite(liste):
@@ -85,7 +85,7 @@ def verifie_parite(liste):
         >>> verifie_parite(["1", "0", "1", "0"])
         True
 
-        >>> verifie_parite(["0", "1", "1", "0", "1"])
+        >>> verifie_parite(["0", "1", "1", "0", "1", "1"])
         False
     """
     zeros = 0  # Variable nous permettant de compter le nombre de "0"
@@ -100,8 +100,8 @@ def verifie_parite(liste):
     return False
 
 
-assert not verifie_parite(["1", "1", "1", "0"])
-assert verifie_parite(["0", "1", "1", "0", "1"])
+assert verifie_parite(["1", "0", "1", "0"])
+assert not verifie_parite(["0", "1", "1", "0", "1", "1"])
 
 
 def verifie_identique(liste):
@@ -132,5 +132,35 @@ def verifie_identique(liste):
     return True
 
 
-assert not verifie_identique(["1", "1", "0"])
 assert verifie_identique(["1", "0"])
+assert not verifie_identique(["1", "1", "0"])
+
+
+def grille_complete(g):
+    """Fonction qui, à l'aide d'une grille sous forme de liste contenant des listes, retourne un booléen variant selon
+    si toutes les listes enfant sont remplies des chaînes de caractères "0" ou "1".
+
+    Paramètre(s):
+        - g list: Grille à vérifier sous la forme de liste de liste. La liste parente et les listes enfant peuvent être
+        composées d'un nombre de listes/éléments indéfini et les éléments des listes enfant peuvent être de tout type.
+
+    Retourne:
+        - bool: True si tous les éléments de la grille (listes enfant) font partie des chaînes de caractères "0" ou "1".
+
+    Exemple:
+        >>> grille_complete([["1", "0", "1", "1"], ["1", "0", "0"], ["1"], ["0", "0"]])
+        True
+
+        >>> grille_complete([["0", 1, "1"], ["0", "1", "1"], ["0", "1"]])
+        False
+    """
+    for liste in g:                                     # Itération simple de tous les éléments de chacune des listes
+        for element in liste:                           # en vérifiant que ceux-ci sont soit "0", soit "1". S'ils le
+            if element != "0" and element != "1":       # sont, retourne True, sinon retourne False.
+                return False
+
+    return True
+
+
+assert grille_complete([["1", "0", "1", "1"], ["1", "0", "0"], ["1"], ["0", "0"]])
+assert not grille_complete([["0", 1, "1"], ["0", "1", "1"], ["0", "1"]])
