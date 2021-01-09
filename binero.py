@@ -33,7 +33,7 @@ assert transpose([[34, True], [[False, "25"], 0]]) == [[34, [False, '25']], [Tru
 
 
 def verifie_consecutif(liste):
-    """Fonction qui, à l'aide d'une liste, retourne un boolean variant selon si trois éléments consécutifs se situe
+    """Fonction qui, à l'aide d'une liste, retourne un booléen variant selon si trois éléments consécutifs se situe
     dans cette liste.
 
     Paramètre(s):
@@ -71,20 +71,14 @@ assert verifie_consecutif([[12, 12, 12], [14, 14, 14], False])
 
 
 def verifie_parite(liste):
-    """Fonction qui, à l'aide d'une grille sous forme de liste, retourne True si celle-ci contient autant de 0 que de 1,
-    Sinon retourne False.
 
     Paramètre(s):
-        - liste list: Grille à vérifier
 
     Retourne:
-        - boolean: Résultat de la vérification de parité.
 
     Exemples:
-        >>> verifie_parite(["1","0","1","0"])
         True
 
-        >>> verifie_parite(["1","1","1","0"])
         False
     """
     zero, un = 0, 0   #Variables qui nous permettrons de compter le nombre de 0 et de 1
@@ -97,5 +91,3 @@ def verifie_parite(liste):
         return True   #Retourne True si le nombre de 0 et de 1 est égal
     return False
 
-assert verifie_parite(["1","1","1","0"]) == False
-assert verifie_parite(["1","1","0","0"]) == True
