@@ -88,14 +88,15 @@ def verifie_parite(liste):
         >>> verifie_parite(["0", "1", "1", "0", "1"])
         False
     """
-    zero, un = 0, 0   #Variables qui nous permettrons de compter le nombre de 0 et de 1
-    for i in liste:
-        if i == "1":
-            un += 1   #Ajoute 1 à la variable "un" à la rencontre d'un "1"
-        else:
-            zero += 1 #Ajoute 0 si i n'est pas égal à "1"
-    if zero == un:
-        return True   #Retourne True si le nombre de 0 et de 1 est égal
+    zeros = 0  # Variable nous permettant de compter le nombre de "0"
+
+    for element in liste:           # Itération de chacun des éléments de la liste où l'on compte le nombre de "0"
+        if element == "0":          # (chaîne de caractère), si celui-ci correspond à la moitié du nombre d'élément de
+            zeros += 1              # la liste (puisque nous savons que ces éléments sont soit "0" ou "1" et que leur
+                                    # nombre est pair), retourne True, sinon False.
+    if zeros == len(liste) // 2:
+        return True
+
     return False
 
 
