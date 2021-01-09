@@ -33,7 +33,7 @@ assert transpose([[34, True], [[False, "25"], 0]]) == [[34, [False, '25']], [Tru
 
 
 def verifie_consecutif(liste):
-    """Fonction qui, à l'aide d'une liste, retourne un boolean variant selon si trois éléments consécutifs se situe
+    """Fonction qui, à l'aide d'une liste, retourne un booléen variant selon si trois éléments consécutifs se situe
     dans cette liste.
 
     Paramètre(s):
@@ -71,31 +71,34 @@ assert verifie_consecutif([[12, 12, 12], [14, 14, 14], False])
 
 
 def verifie_parite(liste):
-    """Fonction qui, à l'aide d'une grille sous forme de liste, retourne True si celle-ci contient autant de 0 que de 1,
-    Sinon retourne False.
+    """Fonction qui, à l'aide d'une liste, retourne un booléen variant selon si autant de "0" et de "1" se situent dans
+    cette liste.
 
     Paramètre(s):
-        - liste list: Grille à vérifier
+        - liste list: Liste à vérifier, peut posséder un nombre d'élément indéfini mais doit être pair (sinon le
+        résultat sera forcément False) sachant que ceux-ci doivent être les chaînes de caractères "0" ou "1".
 
     Retourne:
-        - boolean: Résultat de la vérification de parité.
+        - boolean: True si la liste contient autant de "0" que de "1", sinon False.
 
     Exemples:
-        >>> verifie_parite(["1","0","1","0"])
+        >>> verifie_parite(["1", "0", "1", "0"])
         True
 
-        >>> verifie_parite(["1","1","1","0"])
+        >>> verifie_parite(["0", "1", "1", "0", "1"])
         False
     """
-    zero, un = 0, 0   #Variables qui nous permettrons de compter le nombre de 0 et de 1
-    for i in liste:
-        if i == "1":
-            un += 1   #Ajoute 1 à la variable "un" à la rencontre d'un "1"
-        else:
-            zero += 1 #Ajoute 0 si i n'est pas égal à "1"
-    if zero == un:
-        return True   #Retourne True si le nombre de 0 et de 1 est égal
+    zeros = 0  # Variable nous permettant de compter le nombre de "0"
+
+    for element in liste:           # Itération de chacun des éléments de la liste où l'on compte le nombre de "0"
+        if element == "0":          # (chaîne de caractère), si celui-ci correspond à la moitié du nombre d'élément de
+            zeros += 1              # la liste (puisque nous savons que ces éléments sont soit "0" ou "1" et que leur
+                                    # nombre est pair), retourne True, sinon False.
+    if zeros == len(liste) // 2:
+        return True
+
     return False
 
-assert verifie_parite(["1","1","1","0"]) == False
-assert verifie_parite(["1","1","0","0"]) == True
+
+assert not verifie_parite(["1", "1", "1", "0"])
+assert verifie_parite(["0", "1", "1", "0", "1"])

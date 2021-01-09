@@ -43,3 +43,18 @@ Cette représentation est la représentation habituelle d'une grille de jeu en p
 4. **Bonus :** Améliorez l'interface graphique et les fonctionnalités du jeu : choix de la taille de la grille et du niveau (ce qui impliquera la saisie d'une bibliothèque de grilles), cases *figées* en couleur, compteur de temps.
 
 Vous devrez également rédiger un rapport d'une page environ au format pdf expliquant votre démarche, les difficultés rencontrées et les réponses que vous y avez apportées.
+
+## Critères
+
+* Résultat final
+* Implication en classe durant les séances de projet
+* Respect des consignes
+* Organisation et propreté du code informatique
+* Présence de commentaires dans le code *(avec #)*
+* Spécifications de fonctions (`""".....""""`)
+* Sélection pertinente d'assertions pour contrôler les résultats obtenus pour chacune des fonctions
+* Rapport clair avec un contenu significatif
+
+## Remise du projet
+
+Fichier zip contenant les programmes et le rapport **pour le 01/02/2021**.
