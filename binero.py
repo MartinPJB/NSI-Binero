@@ -167,15 +167,38 @@ assert not grille_complete([["0", 1, "1"], ["0", "1", "1"], ["0", "1"]])
 
 
 def verifie_grille(g):
-    grille = g
-    
-    if not grille_complete(grille):
+    """Fonction qui vérifiera la validité d'une grille de binéro en utilisant les fonctions définies précédemment.
+
+    Paramètre(s):
+        - g list: Grille à vérifier sous la forme de liste de liste.
+
+    Retourne:
+        - bool: True si tous les éléments de la grille de binéro sont validés par le programme. False sinon.
+
+    Exemple:
+        >>> verifie_grille([["0","1","0","1"],["1","0","1","0"],["0","0","1","1"],["1","1","0","0"]])
+        True
+
+        >>> verifie_grille([["0","1","0","1"],["1","0","1","1"],["0","0","1","1"],["1","1","0","0"]])
+        False
+    """
+    if not grille_complete(g):  # Vérification si la grille est complète
         return False
-    
-    for i in range(2):
-        if not verifie_parite(grille) and not verifie_consecutif(grille) and not verifie_identique(grille):
-            return False
-        grille = transpose(grille)
+
+    for i in g:                                                     # Itération simple de tous les éléments de la liste
+        if not verifie_parite(i) and not verifie_identique(i):      # et vérification de la parité et l'identicité des
+            return False                                            # des élements.
+
+    for _ in range(2):                                              # Boucle qui sera executée deux fois afin de vérifier
+        if not verifie_consecutif(g):                               # la consécutivité de la liste (Une fois non transposée,
+            return False                                            # et une fois transposée.)
+        g = transpose(g)
     
     return True
-                
+
+#Plus d'asserts pour être bien sûr que ça s'applique
+assert verifie_grille([["0","1","0","1"],["1","0","1","0"],["0","0","1","1"],["1","1","0","0"]])
+assert not verifie_grille([["0","1","0","1"],["1","0","1","1"],["0","0","1","1"],["1","1","0","0"]])
+
+assert verifie_grille([["0","0","1","1"],["1","0","0","1"],["1","1","0","0"],["0","1","1","0"]])
+assert not verifie_grille([["1","0","1","1"],["1","0","0","0"],["1","1","0","0"],["0","1","1","0"]])
