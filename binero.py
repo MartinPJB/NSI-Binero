@@ -59,9 +59,9 @@ def verifie_consecutif(liste):
     for element in liste:
         if element == precedents[0] and element == precedents[1]:
             return False
-        else:
-            precedents[1] = precedents[0]
-            precedents[0] = element
+
+        precedents[1] = precedents[0]
+        precedents[0] = element
 
     return True
 
