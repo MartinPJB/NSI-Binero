@@ -59,9 +59,9 @@ def verifie_consecutif(liste):
     for element in liste:
         if element == precedents[0] and element == precedents[1]:
             return False
-        else:
-            precedents[1] = precedents[0]
-            precedents[0] = element
+
+        precedents[1] = precedents[0]
+        precedents[0] = element
 
     return True
 
@@ -88,14 +88,10 @@ def verifie_parite(liste):
         >>> verifie_parite(["0", "1", "1", "0", "1", "1"])
         False
     """
-    zeros = 0  # Variable nous permettant de compter le nombre de "0"
+    zeros = len([i for i in liste if i == "0"])  # Variable nous permettant de compter le nombre de "0" par comprehension
 
-    for element in liste:           # Itération de chacun des éléments de la liste où l'on compte le nombre de "0"
-        if element == "0":          # (chaîne de caractère), si celui-ci correspond à la moitié du nombre d'élément de
-            zeros += 1              # la liste (puisque nous savons que ses éléments sont soit "0" ou "1" et que leur
-                                    # nombre est pair), retourne True, sinon False.
-    if zeros == len(liste) // 2:
-        return True
+    if zeros == len(liste) // 2:      # On regarde si le nombre de "0" est égal au nombre de "1" (Calculé par la division
+        return True                   # euclidienne de la longueur de la liste par deux.)
 
     return False
 
