@@ -119,7 +119,7 @@ def verifie_identique(liste):
         >>> verifie_identique(["1", "0"])
         True
 
-        >>> verifie_identique(["1", "1", "0"])
+        >>> verifie_identique([["1", "1", "0"], ["0", "1"], ["1", "1", "0"]])
         False
     """
     valeurs = []  # Variable nous permettant de stocker les valeurs de la liste "liste"
@@ -133,7 +133,7 @@ def verifie_identique(liste):
 
 
 assert verifie_identique(["1", "0"])
-assert not verifie_identique(["1", "1", "0"])
+assert not verifie_identique([["1", "1", "0"], ["0", "1"], ["1", "1", "0"]])
 
 
 def grille_complete(g):
@@ -164,3 +164,18 @@ def grille_complete(g):
 
 assert grille_complete([["1", "0", "1", "1"], ["1", "0", "0"], ["1"], ["0", "0"]])
 assert not grille_complete([["0", 1, "1"], ["0", "1", "1"], ["0", "1"]])
+
+
+def verifie_grille(g):
+    grille = g
+    
+    if not grille_complete(grille):
+        return False
+    
+    for i in range(2):
+        if not verifie_parite(grille) and not verifie_consecutif(grille) and not verifie_identique(grille):
+            return False
+        grille = transpose(grille)
+    
+    return True
+                
