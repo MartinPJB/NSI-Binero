@@ -196,7 +196,6 @@ def verifie_grille(g):
     
     return True
 
-#Plus d'asserts pour être bien sûr que ça s'applique
 assert verifie_grille([["0","1","0","1"],["1","0","1","0"],["0","0","1","1"],["1","1","0","0"]])
 assert not verifie_grille([["0","1","0","1"],["1","0","1","1"],["0","0","1","1"],["1","1","0","0"]])
 
