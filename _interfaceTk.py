@@ -1,127 +1,160 @@
-# Appel des dépendances
-from tkinter import *       # Import de tkinter qui nous permettra de créer notre fenêtre
-from tkinter import font    # Import de "font" (provenant de tkinter) qui nous permettra de créer nos polices 
-from binero import *        # Import de binero qui nous permettra de valider la grille du joueur
+from tkinter import *
+from tkinter import font
+from tkinter import messagebox
+# from tkinter import ttk
+from binero import verifie_grille
 
-# Création de la fenêtre tkinter
-fenetre = Tk()
-fenetre.geometry("200x300")     # Change la taille de la fenêtre.
-fenetre.title("Jeu du binéro")  # Change le titre de la fenêtre.
-fenetre.resizable(False, False) # Empêche l'utilisateur de changer la taille de la fenêtre.
+# Création de la fenêtre racine tkinter à taille fixe
+racine = Tk()
+racine.title("Binero")
+racine.resizable(False, False)
 
-# Création d'un canvas pour placer tout au centre
-can = Canvas(fenetre, height = 100, width = 100)
-can.place(relx = 0.5, rely = 0.5, anchor = CENTER)
+# Définition des polices d'écriture utilisées
+polices = {
+    "h1": font.Font(family="Arial", size=18, weight="bold"),
+    "h2": font.Font(family="Arial", size=14, weight="bold"),
+    "default": font.Font(family="Arial", size=10)
+}
 
-# Définition de la police d'écriture dans cette fenêtre
-policeTitre = font.Font(family = "Arial", size = 80)
-police = font.Font(family = "Arial", size = 10)
-
-
-# Définition des grilles de binéro (classées par difficulté)
-class difficultesGrilles:
-    facile = [["","","",""], ["1","","1",""], ["","0","",""], ["","","0","0"]] #4x4
-    moyen = [["","0","","","1",""], ["","","0","","","1"], ["0","","","","0",""], ["","0","","","",""], ["1","","1","","","1"], ["0","","","","1",""]] #6x6
-    difficile = [["1","","1","","","","","0"], ["","","","","","","",""], ["","0","","","","","0","0"], ["","","1","","1","","",""], ["","","","","1","","","0"], ["","0","","","","","",""], ["","","1","","0","","",""], ["","0","","","","","1",""]] #8x8
-
-
-# Définition de la variable "reponse"
-reponse = StringVar()
-reponse.set("")
+# Définition des grilles de départ pour le jeu de binero (classées par difficulté)
+grilles = [
+    [["", "", "", ""], ["1", "", "1", ""], ["", "0", "", ""], ["", "", "0", "0"]],  # Grille facile (4x4)
+    [["", "0", "", "", "1", ""], ["", "", "0", "", "", "1"], ["0", "", "", "", "0", ""],  # Grille moyenne (6x6)
+     ["", "0", "", "", "", ""], ["1", "", "1", "", "", "1"], ["0", "", "", "", "1", ""]],
+    [["1", "", "1", "", "", "", "", "0"], ["", "", "", "", "", "", "", ""],  # Grille difficile (8x8)
+     ["", "0", "", "", "", "", "0", "0"], ["", "", "1", "", "1", "", "", ""],
+     ["", "", "", "", "1", "", "", "0"], ["", "0", "", "", "", "", "", ""],
+     ["", "", "1", "", "0", "", "", ""], ["", "0", "", "", "", "", "1", ""]]
+]
 
 
-# Classe de jeu
-class jeu:   
-    def __init__(self):
-        self.grille = None # Grille de jeu | Sera modifié dans le choix de la difficulté
+class ChoixDifficulte:
+    """Classe d'interface Tkinter permettant à l'utilisateur de sélectionner une difficulté."""
+
+    def __init__(self, parent, callback):
+        self.parent = parent
+        self.callback = callback
+
+        self.frame_principale = Frame(self.parent)
+        self.frame_principale.grid(column=1, row=1, sticky="nsew", padx=25, pady=(4, 8))
+
+        Label(self.frame_principale, font=polices["h1"], text="Jeu du Binero", anchor="center") \
+            .grid(column=1, row=1, pady=(0, 4))
+        Label(self.frame_principale, font=polices["default"], text="Veuillez choisir une difficulté :",
+              anchor="center").grid(column=1, row=2)
+
+        # Groupement des boutons de difficulté (utilisation du lambda pour faire passer des arguments dans la fonction)
+        self.frame_boutons = Frame(self.frame_principale)
+        self.frame_boutons.grid(column=1, row=3, sticky="s")
+
+        Button(self.frame_boutons, text="Facile", font=polices["default"], relief=GROOVE,
+               command=lambda: self.commande_boutons(0)).grid(column=1, row=1, sticky="ew")
+        Button(self.frame_boutons, text="Moyen", font=polices["default"], relief=GROOVE,
+               command=lambda: self.commande_boutons(1)).grid(column=1, row=2, sticky="ew")
+        Button(self.frame_boutons, text="Difficile", font=polices["default"], relief=GROOVE,
+               command=lambda: self.commande_boutons(2)).grid(column=1, row=3, sticky="ew")
+
+    def commande_boutons(self, difficulte):
+        """Méthode qui permet d'appeler le callback avec la grille correspondant à la difficulté donné par l'utilisateur
+        après avoir détruit frame_principale et ses éléments. Supprime également l'objet associé à la classe.
+
+        Paramètres:
+            - difficulte int: Difficulté demandé pour la partie à venir (0 vaut facile, 1 vaut moyen, 2
+        vaut difficile)
+        """
+        self.frame_principale.destroy()
+
+        self.callback(grilles[difficulte])
 
 
-    def clair_canvas(self):
-        for element in can.grid_slaves():   # S'itère en fonction des éléments présents dans le canvas
-            element.grid_forget()           # Supprime l'élément du canvas
+class GrilleJeu:
+    def __init__(self, parent, grille, callback):
+        self.parent = parent
+        self.grille = grille
+        self.callback = callback
 
+        self.frame_principale = Frame(self.parent)
+        self.frame_principale.grid(column=1, row=1, sticky="nsew", padx=25, pady=(4, 8))
 
-    def change_texte(self, btn, ligne, col):
-        if btn["text"] == "":       # Si rien n'est défini dans le bouton
-            btn.config(text = "0")  # changement du texte en "0".
-        elif btn["text"] == "0":    # Si le texte du bouton est "0"
-            btn.config(text = "1")  # changement du texte en "1".
-        else:                       # Sinon, changement du texte en
-            btn.config(text = "")   # "".
-        self.grille[ligne][col] = btn["text"] # Changement du texte du bouton.
+        Label(self.frame_principale, font=polices["h2"], text="À vous de jouer !", anchor="center") \
+            .grid(column=1, row=1, pady=(0, 4))
 
+        # self.labelframe_regles = ttk.Labelframe(self.frame_principale, text="Rappel des règles du Binero") \
+        #     .grid(column=1, row=2)
+        #
+        # Label(self.labelframe_regles, font=polices["default"],
+        #       text="• Pas plus de deux 0 ou deux 1 consécutifs sur une ligne ou sur une colonne") \
+        #     .grid(column=1, row=1, sticky="w")
+        # Label(self.labelframe_regles, font=polices["default"],
+        #       text="• Chaque ligne et chaque colonne contiennent autant de 0 que de 1") \
+        #     .grid(column=1, row=2, sticky="w")
+        # Label(self.labelframe_regles, font=polices["default"],
+        #       text="• Deux lignes ou deux colonnes ne peuvent être identiques") \
+        #     .grid(column=1, row=3, sticky="w")
 
-    def termine_le_jeu(self):   # Permet de montrer un écran de GG au joueur
-        self.clair_canvas()     # S'occupe de supprimer les éléments du canvas
-        titre = Label(can, font = police, text = "Bien joué!")
-        titre.grid(row = 0, column = 0, columnspan = 70)
+        self.frame_boutons = Frame(self.frame_principale)
+        self.frame_boutons.grid(column=1, row=3)
 
-        button = Button(can, text = "Retourner au menu", relief = GROOVE, borderwidth = 2)
-        button.grid(row = 2, column = 0, columnspan = 70)
-        button.configure(command = lambda : self.reset_le_jeu())
-    
-    def reset_le_jeu(self):     # Permet de remettre à 0 tous les éléments du jeu
-        self.grille = None
-        reponse.set("")
-        
-        self.clair_canvas()     # S'occupe de supprimer les éléments du canvas
-        self.choix_difficulte() # Lance l'interface de choix de difficulté
-
-
-    def verification(self):                # Cette fonction va vérifier si le joueur a bien fait sa grille de binéro
-        if verifie_grille(self.grille):    # Si la grille du joueur est valide, il gagne la partie.
-            reponse.set("Bravo!")
-            self.termine_le_jeu()
-        else:
-            reponse.set("Réessaye")
-
-
-    def choix_difficulte(self):
-        titre = Label(can, font = police, text = "Choix de la difficulté")
-        titre.grid(row = 0, column = 0, columnspan = 70)
-
-        # Listes qui nous permettront de créer les boutons
-        difficultes = ["facile", "moyen", "difficile"]
-        buttons = []
-
-        # Création des boutons
-        for i in range(len(difficultes)):
-            buttons.append(Button(can, text = difficultes[i].capitalize(), relief = GROOVE, width = 6, borderwidth = 2))
-            buttons[i].grid(row = (i + 1) * 2, column = 0, columnspan = 70)
-            buttons[i].configure(command = lambda i = i : self.lance_le_jeu(difficultes[i]))
-        
-    
-    def lance_le_jeu(self, difficulte):
-        self.grille = getattr(difficultesGrilles, difficulte)                   # Récupère la liste à partir de la difficulté (qui est donnée en string)
-        nouvelleTaille = f"{len(self.grille) * 50}x{(len(self.grille) * 50) + 100}"       # Définit la nouvelle taille de la fenetre
-        fenetre.geometry(nouvelleTaille)                                        # et l'applique.
-
-        self.clair_canvas()     # S'occupe de supprimer les éléments du canvas
-
-        commentaire = Label(can, font = police, textvariable = reponse)     # Créer le label "commentaire" qui nous servira
-        commentaire.grid(row = 14, column = 0, columnspan = 70)             # a transmettre des messages au joueur.
-        self.creation_tableau()                                                  # Créer le tableau avec la grille
-
-
-
-    def creation_tableau(self):
-        tableauBouton = [[None] * len(self.grille)] * len(self.grille) # Initialisé avec None
+        # Création de la grille de jeu
+        self.grille_boutons = []
 
         for i in range(len(self.grille)):
-            for j in range(len(self.grille)):
-                if self.grille[i][j] != "":
-                    bouton = Button(can, text = self.grille[i][j], height = 2, width = 4, relief = GROOVE, borderwidth = 2, state = DISABLED)
+            self.grille_boutons.append([])
+
+            for j in range(len(self.grille[i])):
+                if self.grille[i][j] == "":  # Ci dessous, on met bouton=bouton afin de le mettre à jour à chaque fois
+                    bouton = Button(self.frame_boutons, text="", height=2, width=4, relief=GROOVE, borderwidth=2)
+                    bouton["command"] = lambda bouton=bouton: self.modification_bouton(bouton)
                 else:
-                    bouton = Button(can, text = "", height = 2, width = 4, relief = GROOVE, borderwidth = 2)
-                    bouton.configure(command = lambda b = bouton, x = i, y = j: self.change_texte(b, x, y))
-                tableauBouton[i][j] = bouton
-                tableauBouton[i][j].grid(row = i, column = j)
+                    bouton = Button(self.frame_boutons, text=self.grille[i][j], height=2, width=4, relief=GROOVE,
+                                    borderwidth=2, bg="gray85", state=DISABLED)
 
-        validationSaisie = Button(can, text = "Vérifier mon résultat", font = police, relief = GROOVE, borderwidth = 2)
-        validationSaisie.grid(row = 12, column = 0, columnspan = 25)
-        validationSaisie.configure(command = lambda : self.verification())
+                bouton.grid(row=i, column=j)
+                self.grille_boutons[i].append(bouton)
+
+        # Groupe de boutons de "contrôle" permettant à l'utilisateur de valider ou réinitialiser la partie
+        self.groupe_controles = Frame(self.frame_principale)
+        self.groupe_controles.grid(column=1, row=4, pady=(4, 0))
+
+        Button(self.groupe_controles, text="Valider", font=polices["default"], relief=GROOVE, borderwidth=2,
+               command=self.verification).grid(column=1, row=1)
+
+        Button(self.groupe_controles, text="Réinitialiser", font=polices["default"], relief=GROOVE, borderwidth=2,
+               command=self.reinitialisation).grid(column=2, row=1)
+
+    def modification_bouton(self, bouton):
+        if bouton["text"] == "":
+            bouton["text"] = "0"
+        elif bouton["text"] == "0":
+            bouton["text"] = "1"
+        else:
+            bouton["text"] = ""
+
+    def verification(self):
+        if verifie_grille(self.grille):
+            messagebox.showinfo(title="Vous avez gagné",
+                                message="Félicitations ! Votre grille a été validé par le vérificateur.")
+            self.frame_principale.destroy()
+
+            self.callback(self.parent)
+        else:
+            messagebox.showerror(title="Erreur dans la grille",
+                                 message="Oh non ! Une erreur a été détecté dans votre grille par le vérificateur, "
+                                         "assurez-vous de bien respecter toutes les règles du Binero indiquées.")
+
+    def reinitialisation(self):
+        for i in self.grille_boutons:
+            for j in i:
+                if j["state"] != DISABLED:
+                    j["text"] = ""
 
 
-jeuBinero = jeu() # Initialise la classe
-jeuBinero.choix_difficulte() # Lance la fonction par défaut pour demander la difficulté avant de lancer le jeu
-fenetre.mainloop()
+def debut_interface(parent):
+    """Fonction qui démarre l'interface par le choix de difficulté avec pour callback, la grille de jeu. Cette fonction
+    est récursive s'arrêtant lorsque l'utilisateur ferme le programme et **dois** donc **absolument** être exécuté en
+    fin de programme."""
+    ChoixDifficulte(parent, lambda grille: GrilleJeu(racine, grille, debut_interface))
+
+
+debut_interface(racine)
+racine.mainloop()
