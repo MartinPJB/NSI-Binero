@@ -1,7 +1,6 @@
 from tkinter import *
 from tkinter import font
 from tkinter import messagebox
-# from tkinter import ttk
 from binero import verifie_grille
 
 # Création de la fenêtre racine tkinter à taille fixe
@@ -79,19 +78,6 @@ class GrilleJeu:
         Label(self.frame_principale, font=polices["h2"], text="À vous de jouer !", anchor="center") \
             .grid(column=1, row=1, pady=(0, 4))
 
-        # self.labelframe_regles = ttk.Labelframe(self.frame_principale, text="Rappel des règles du Binero") \
-        #     .grid(column=1, row=2)
-        #
-        # Label(self.labelframe_regles, font=polices["default"],
-        #       text="• Pas plus de deux 0 ou deux 1 consécutifs sur une ligne ou sur une colonne") \
-        #     .grid(column=1, row=1, sticky="w")
-        # Label(self.labelframe_regles, font=polices["default"],
-        #       text="• Chaque ligne et chaque colonne contiennent autant de 0 que de 1") \
-        #     .grid(column=1, row=2, sticky="w")
-        # Label(self.labelframe_regles, font=polices["default"],
-        #       text="• Deux lignes ou deux colonnes ne peuvent être identiques") \
-        #     .grid(column=1, row=3, sticky="w")
-
         self.frame_boutons = Frame(self.frame_principale)
         self.frame_boutons.grid(column=1, row=3)
 
@@ -133,14 +119,13 @@ class GrilleJeu:
     def verification(self):
         if verifie_grille(self.grille):
             messagebox.showinfo(title="Vous avez gagné",
-                                message="Félicitations ! Votre grille a été validé par le vérificateur.")
+                                message="Félicitations ! Votre grille est valide et vous avez gagné.")
             self.frame_principale.destroy()
 
             self.callback(self.parent)
         else:
             messagebox.showerror(title="Erreur dans la grille",
-                                 message="Oh non ! Une erreur a été détecté dans votre grille par le vérificateur, "
-                                         "assurez-vous de bien respecter toutes les règles du Binero indiquées.")
+                                 message="Oh non ! Une erreur est invalide, veuillez réessayer.")
 
     def reinitialisation(self):
         for i in self.grille_boutons:
