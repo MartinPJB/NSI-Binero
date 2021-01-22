@@ -69,7 +69,8 @@ class ChoixDifficulte:
 class GrilleJeu:
     def __init__(self, parent, grille, callback):
         self.parent = parent
-        self.grille = grille
+        # Création de self.grille par compréhension afin d'éviter que la valeur ne soit assignée par référence
+        self.grille = [[grille[x][y] for y in range(len(grille[x]))] for x in range(len(grille))]
         self.callback = callback
 
         self.frame_principale = Frame(self.parent)
@@ -88,9 +89,11 @@ class GrilleJeu:
             self.grille_boutons.append([])
 
             for j in range(len(self.grille[i])):
-                if self.grille[i][j] == "":  # Ci dessous, on met bouton=bouton afin de le mettre à jour à chaque fois
+                if self.grille[i][j] == "":
                     bouton = Button(self.frame_boutons, text="", height=2, width=4, relief=GROOVE, borderwidth=2)
-                    bouton["command"] = lambda bouton=bouton: self.modification_bouton(bouton)
+                    bouton["command"] = lambda bouton=bouton, j=j, i=i: self.modification_bouton(bouton, j, i)
+                    # Notation bouton=bouton, j=j, i=i dans la fonction anonyme afin de mettre à jour ses paramètres à
+                    # chaque fois
                 else:
                     bouton = Button(self.frame_boutons, text=self.grille[i][j], height=2, width=4, relief=GROOVE,
                                     borderwidth=2, bg="gray85", state=DISABLED)
@@ -108,13 +111,22 @@ class GrilleJeu:
         Button(self.groupe_controles, text="Réinitialiser", font=polices["default"], relief=GROOVE, borderwidth=2,
                command=self.reinitialisation).grid(column=2, row=1)
 
-    def modification_bouton(self, bouton):
+    def modification_bouton(self, bouton, x, y):
+        """Méthode qui met à jour les différents éléments de l'interface lorsque l'utilisateur interagit avec
+        l'interface.
+
+        Paramètres:
+            - bouton tkinter.Button: Bouton à modifier.
+            - x int: Position d'abscisse du bouton par rapport à la grille.
+            - y int: Position d'ordonnée du bouton par rapport à la grille.
+        """
         if bouton["text"] == "":
             bouton["text"] = "0"
         elif bouton["text"] == "0":
             bouton["text"] = "1"
         else:
             bouton["text"] = ""
+        self.grille[y][x] = bouton["text"]  # Répond à la nécessité de mettre à jour la grille de base
 
     def verification(self):
         if verifie_grille(self.grille):
@@ -128,10 +140,12 @@ class GrilleJeu:
                                  message="Oh non ! Une erreur est invalide, veuillez réessayer.")
 
     def reinitialisation(self):
-        for i in self.grille_boutons:
-            for j in i:
-                if j["state"] != DISABLED:
-                    j["text"] = ""
+        """Méthode qui permet de réinitialiser la grille visuelle à ses valeurs prédéfinies."""
+        for i in range(len(self.grille_boutons)):
+            for j in range(len(self.grille_boutons[i])):
+                if self.grille_boutons[i][j]["state"] != DISABLED:
+                    self.grille_boutons[i][j]["text"] = ""
+                    self.grille[i][j] = ""
 
 
 def debut_interface(parent):
