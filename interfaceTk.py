@@ -28,7 +28,13 @@ grilles = [
 
 
 class ChoixDifficulte:
-    """Classe d'interface Tkinter permettant à l'utilisateur de sélectionner une difficulté."""
+    """Classe d'interface Tkinter permettant à l'utilisateur de sélectionner une difficulté. Une fois celle-ci
+    choisie, appelle le callback.
+
+    Paramètres d'initialisation:
+        - parent tkinter.Tk: Parent hiérarchique de l'interface à créer.
+        - callback function: Fonction à appeler une fois que l'utilisateur fait son choix de difficulté.
+    """
 
     def __init__(self, parent, callback):
         self.parent = parent
@@ -62,11 +68,19 @@ class ChoixDifficulte:
         vaut difficile)
         """
         self.frame_principale.destroy()
-
         self.callback(grilles[difficulte])
 
 
 class GrilleJeu:
+    """Classe d'interface Tkinter définissant la grille de jeu et permettant à l'utilisateur de jouer. Une fois celle-ci
+    réussie, appelle le callback.
+
+    Paramètres d'initialisation:
+        - parent tkinter.Tk: Parent hiérarchique de l'interface à créer.
+        - grille list: Grille sous forme de liste de liste proposé comme liste de début à l'utilisateur.
+        - callback function: Fonction à appeler une fois que l'utilisateur fait son choix de difficulté.
+    """
+
     def __init__(self, parent, grille, callback):
         self.parent = parent
         # Création de self.grille par compréhension afin d'éviter que la valeur ne soit assignée par référence
@@ -129,6 +143,7 @@ class GrilleJeu:
         self.grille[y][x] = bouton["text"]  # Répond à la nécessité de mettre à jour la grille de base
 
     def verification(self):
+        """Méthode qui permet de valider ou non la grille à l'aide des différentes fonctions de binero.py."""
         if verifie_grille(self.grille):
             messagebox.showinfo(title="Vous avez gagné",
                                 message="Félicitations ! Votre grille est valide et vous avez gagné.")
@@ -137,7 +152,7 @@ class GrilleJeu:
             self.callback(self.parent)
         else:
             messagebox.showerror(title="Erreur dans la grille",
-                                 message="Oh non ! Une erreur est invalide, veuillez réessayer.")
+                                 message="Oh non ! Votre grille est invalide, veuillez réessayer.")
 
     def reinitialisation(self):
         """Méthode qui permet de réinitialiser la grille visuelle à ses valeurs prédéfinies."""
