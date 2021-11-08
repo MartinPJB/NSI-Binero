@@ -1,4 +1,4 @@
-# NSI - Projet n°2
+# NSI - Projet n°2 [Classe de première]
 *Instructions de projet*
 
 ## Règles du Binero
